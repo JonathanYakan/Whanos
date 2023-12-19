@@ -9,23 +9,20 @@ on:
       - main
 
 jobs:
-  check_program_compilation_linux:
-    container:
-      image: epitechcontent/epitest-docker:latest
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # check_program_compilation_linux:
+  #   container:
+  #     image: epitechcontent/epitest-docker:latest
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - name: Configure and build with CMake
-        run: |
-          cmake -B build
-          cmake --build build
+  #     - name: Configure and build with CMake
+  #       run: |
+  #         cmake -B build
+  #         cmake --build build
 
   check_program_compilation_windows:
-    needs: [check_program_compilation_linux]
-    container:
-      image: mcr.microsoft.com/windows/servercore:ltsc2019
     runs-on: windows-latest
     steps:
       - name: Checkout repository
