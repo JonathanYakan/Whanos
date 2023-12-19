@@ -14,8 +14,10 @@ jobs:
       image: epitechcontent/epitest-docker:latest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - id: check_program_compilation
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure and build with CMake
         run: |
           cmake -B build
           cmake --build build
@@ -26,7 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true || github.event_name == 'push'
     steps:
-      - name: Repository checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
-        run: |
-          ls && ls build
+        with:
+          fetch-depth: 0
+
+      - name: Repository mirroring
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: ${{ secrets.MIRROR_URL }}
+          ssh_private_key: ${{ secrets.CLONE_KEY }}
